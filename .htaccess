@@ -1,0 +1,25 @@
+<Files "composer.json">
+	deny from all
+</Files>
+
+<Files "composer.lock">
+	deny from all
+</Files>
+
+<Files "composer.phar">
+	deny from all
+</Files>
+
+<Files "Makefile">
+	deny from all
+</Files>
+
+<Files ".gitignore">
+	deny from all
+</Files>
+
+RewriteEngine On
+
+RewriteBase /~sisrael1
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]

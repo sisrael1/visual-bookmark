@@ -1,0 +1,19 @@
+{
+  "name": "visual-bookmark",
+  "version": "0.0.1",
+  "description": "A bookmark application.",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.11.0"
+  }
+}
