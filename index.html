@@ -1,14 +1,18 @@
 <!doctype html>
 
-<html ng-app="Main">
+<html ng-app="Main" ng-controller="MainController">
 	<head>
 		<link rel="stylesheet" type="text/css" href="assets/libs/angular/angular-csp.css"/>
+		<title ng-bind="'Visual Bookmark - ' + title"></title>
 	</head>
-	<body ng-controller="MainController">
-		<p>{{txt}}</p>
+	<body>
+		<div ng-view></div>
+
 		<script type="text/javascript" src="assets/libs/angular/angular.min.js"></script>
+		<script type="text/javascript" src="assets/libs/angular-route/angular-route.min.js"></script>
 		<script type="text/javascript" src="assets/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script type="text/javascript" src="assets/app.js"></script>
 		<script type="text/javascript" src="assets/services/crudservice.js"></script>
+		<script type="text/javascript" src="assets/services/pageservice.js"></script>
 	</body>
 </html>
