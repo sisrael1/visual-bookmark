@@ -1,9 +1,14 @@
-var app = angular.module('Main', ['ngRoute']);
+var app = angular.module('Main', ['ngRoute', 'ui.bootstrap']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'assets/views/index.html',
+			controller: 'MainController',
+			title: 'Home'
+		})
+		.when('/product', {
+			templateUrl: 'assets/views/product.html',
 			controller: 'MainController',
 			title: 'Home'
 		})
@@ -21,11 +26,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 			templateUrl: 'assets/views/help.html',
 			controller: 'MainController',
 			title: 'Help'
-		})
-		.when('/product', {
-			templateUrl: 'assets/views/product.html',
-			controller: 'MainController',
-			title: 'Product'
 		})
 		.otherwise({
 			redirectTo: '/'

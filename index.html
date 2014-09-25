@@ -7,14 +7,19 @@
 		<title ng-bind="'Visual Bookmark - ' + title"></title>
 	</head>
 	<body>
+		<div ng-include="'assets/views/header.html'"></div>
+		
 		<div ng-view></div>
+
+		<div ng-include="'assets/views/footer.html'"></div>
 
 		<script type="text/javascript" src="assets/libs/angular/angular.min.js"></script>
 		<script type="text/javascript" src="assets/libs/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="assets/libs/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script type="text/javascript" src="assets/app.js"></script>
 		<script type="text/javascript" src="assets/services/crudservice.js"></script>
-		<script type="text/javascript" src="assets/services/pageservice.js"></script>
 		<script type="text/javascript" src="assets/controllers/maincontroller.js"></script>
 	</body>
 </html>
