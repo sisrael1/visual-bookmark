@@ -10,7 +10,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 		.when('/product', {
 			templateUrl: 'assets/views/product.html',
 			controller: 'MainController',
-			title: 'Home'
+			title: 'Product'
 		})
 		.when('/dashboard', {
 			templateUrl: 'assets/views/dashboard.html',

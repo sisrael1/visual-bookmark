@@ -50,10 +50,10 @@
 	    </div>
 	    <div class="collapse navbar-collapse navbar-right">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Home</a></li>
-	        <li><a href="#product">Product</a></li>
+	        <li ng-class="{active: title == 'Home' ? true : false}"><a href="#">Home</a></li>
+	        <li ng-class="{active: title == 'Product' ? true : false}"><a href="#product">Product</a></li>
 	        <li><a href="" ng-click="showSignUp = !showSignUp">Login</a></li>
-	        <li><a href="#dashboard">Tour</a></li>
+	        <li ng-class="{active: title == 'Dashboard' ? true : false}"><a href="#dashboard">Tour</a></li>
 	      </ul>
 	    </div>
 	  </div>
