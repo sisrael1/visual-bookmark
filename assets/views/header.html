@@ -34,6 +34,54 @@
 	#login-password, #login-submit {
 		margin-left: 1%;
 	}
+
+	#search {
+		position: relative;
+		float: right;
+		background-color: #f8f8f8;
+		padding: 10px;
+		top: -20px;
+	}
+
+	#search-form {
+		max-width: 480px;
+		width: 100%;
+		height: 25px;
+	}
+
+	#search-text, #search-submit {
+		width: 49.5%;
+		height: 100%;
+		float: right;
+	}
+
+	#search-submit {
+		margin-left: 1%;
+	}
+
+	#addBookmark {
+		position: relative;
+		float: right;
+		background-color: #f8f8f8;
+		padding: 10px;
+		top: -20px;
+	}
+
+	#addBookmark-form {
+		max-width: 480px;
+		width: 100%;
+		height: 25px;
+	}
+
+	#addBookmark-url, #addBookmark-submit {
+		width: 49.5%;
+		height: 100%;
+		float: right;
+	}
+
+	#addBookmark-submit {
+		margin-left: 1%;
+	}
 </style>
 
 <div id="header">
@@ -50,21 +98,44 @@
 	    </div>
 	    <div class="collapse navbar-collapse navbar-right">
 	      <ul class="nav navbar-nav">
-	        <li ng-class="{active: title == 'Home' ? true : false}"><a href="#">Home</a></li>
-	        <li ng-class="{active: title == 'Product' ? true : false}"><a href="#product">Product</a></li>
-	        <li><a href="" ng-click="showSignUp = !showSignUp">Login</a></li>
-	        <li ng-class="{active: title == 'Dashboard' ? true : false}"><a href="#dashboard">Tour</a></li>
+	        <li ng-class="{active: title == 'Product' ? true : false}" ng-hide="isDashboard(title)"><a href="#product">Product</a></li>
+	        <li ng-class="{active: title == 'Dashboard' ? true : false}" ng-hide="isDashboard(title)"><a ng-click="signIn()">Tour</a></li>
+	        <li><a href="" ng-click="setPopUp('search')" ng-show="isDashboard(title)">Search</a></li>
+	        <li><a href="" ng-click="setPopUp('addBookmark')" ng-show="isDashboard(title)">Add Bookmark</a></li>
+	        <li ng-class="{active: title == 'Dashboard' ? true : false}" ng-show="signedIn"><a href="#dashboard">Dashboard</a></li>
+	        <li ng-class="{active: title == 'Settings' ? true : false}" ng-show="isDashboard(title)"><a href="#settings">Settings</a></li>
+	        <li ng-class="{active: title == 'Help' ? true : false}" ng-show="isDashboard(title)"><a href="#help">Help</a></li>
+	        <li><a href="" ng-click="setPopUp('signIn')" ng-hide="signedIn">Sign in</a></li>
+	        <li><a href="" ng-click="signOut()" ng-show="signedIn">Sign out</a></li>
 	      </ul>
 	    </div>
 	  </div>
 	</div>
 
-	<div class="container" ng-show="showSignUp">
+	<div class="container" ng-if="showPopUp == 'signIn'">
 		<div id="login">
 			<form id="login-form">
 				<input id="login-submit" type="submit" value="Sign In" ng-click="signIn(signInForm.password, signInForm.username)" />
 				<input id="login-password" type="password" ng-model="signInForm.password" />
 				<input id="login-username" type="textbox" ng-model="signInForm.username" />
+			</form>
+		</div>
+	</div>
+
+	<div class="container" ng-if="showPopUp == 'search'">
+		<div id="search">
+			<form id="search-form">
+				<input id="search-submit" type="submit" value="Search" ng-click="" />
+				<input id="search-text" type="textbox" ng-model="searchForm.text" />
+			</form>
+		</div>
+	</div>
+
+	<div class="container" ng-if="showPopUp == 'addBookmark'">
+		<div id="addBookmark">
+			<form id="addBookmark-form">
+				<input id="addBookmark-submit" type="submit" value="Add Bookmark" ng-click="" />
+				<input id="addBookmark-url" type="textbox" ng-model="addBookmarkForm.url" />
 			</form>
 		</div>
 	</div>
