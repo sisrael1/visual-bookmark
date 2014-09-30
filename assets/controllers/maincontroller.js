@@ -21,9 +21,5 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 		});
 	};
 
-	$scope.deleteBookmark = function (id) {
-		$scope.bookmarks = _.reject($scope.bookmarks, { id: id });
-	};
-
 	$scope.getTxt();
 }]);

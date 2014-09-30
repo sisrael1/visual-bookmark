@@ -116,7 +116,7 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 	};
 
 	$scope.deleteBookmark = function (id) {
-
+		$scope.bookmarks = _.reject($scope.bookmarks, { id: id });
 	};
 
 	$scope.search = function (text) {
