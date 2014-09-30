@@ -22,7 +22,7 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 				'penguin', 'video'
 			],
 			style: {
-				'background-color':'#49f2af'
+				'background-image':'url(assets/images/penguins.png)'
 			}
 		},
 		{
@@ -33,7 +33,7 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 				'dog', 'video'
 			],
 			style: {
-				'background-color':'#a789bf'
+				'background-image':'url(assets/images/dogs.png)'
 			}
 		},
 		{
@@ -44,7 +44,7 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 				'cat', 'video'
 			],
 			style: {
-				'background-color':'#b9971c'
+				'background-image':'url(assets/images/cats.png)'
 			}
 		},
 		{
@@ -55,7 +55,7 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 				'geese', 'video'
 			],
 			style: {
-				'background-color':'#b30bdd'
+				'background-image':'url(assets/images/geese.png)'
 			}
 		},
 		{
