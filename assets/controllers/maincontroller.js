@@ -54,10 +54,15 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 		return ['Dashboard', 'Settings', 'Help'].indexOf(title) > -1;
 	};
 
+	$scope.deleteBookmark = function (id) {
+		$scope.bookmarks = _.reject($scope.bookmarks, { id: id });
+	};
+
 	$scope.getTxt();
 
 	$scope.bookmarks = [
 		{
+			id: 1,
 			name: 'Penguins',
 			modifiedDate: '1 hour ago',
 			tags: [
@@ -68,6 +73,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 2,
 			name: 'Dogs',
 			modifiedDate: '3 hours ago',
 			tags: [
@@ -78,6 +84,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 3,
 			name: 'Cats',
 			modifiedDate: '2 hours ago',
 			tags: [
@@ -88,6 +95,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 4,
 			name: 'Geese',
 			modifiedDate: '2 hours ago',
 			tags: [
@@ -98,6 +106,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 5,
 			name: 'Fish',
 			modifiedDate: '2 hours ago',
 			tags: [
@@ -108,6 +117,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 6,
 			name: 'Tigers',
 			modifiedDate: '2 hours ago',
 			tags: [
@@ -118,6 +128,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 7,
 			name: 'Elephants',
 			modifiedDate: '2 hours ago',
 			tags: [
@@ -128,6 +139,7 @@ app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 
 			}
 		},
 		{
+			id: 8,
 			name: 'Wolves',
 			modifiedDate: '2 hours ago',
 			tags: [

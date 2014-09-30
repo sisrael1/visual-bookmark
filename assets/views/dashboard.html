@@ -4,11 +4,13 @@
 	}
 
 	.bookmark {
-		width: 225px;
-		height: 225px;
-		background-color: #f8f8f8;
 		display: inline-block;
-		margin: 0px 0px 20px 20px;
+		padding: 20px;
+	}
+
+	.bookmark-inner {
+		background-color: #f8f8f8;
+		overflow: auto;
 	}
 
 	.bookmark-image {
@@ -51,19 +53,39 @@
 	#footer {
 		margin-top: 0px !important;
 	}
+
+	.bookmark-info-buttons {
+		float: right;
+		margin-bottom: 10px;
+	}
+
+	.bookmark-info-buttons-delete {
+		padding: 2px 7px 3px 7px;
+	}
+
+	.bookmark-info-buttons-delete-icon {
+		font-size: 10px;
+	}
 </style>
 
-<div id="bookmark-container">
-	<div class="bookmark" ng-repeat="bookmark in bookmarks">
-		<div class="bookmark-image" ng-style="bookmark.style">
-			<div class="bookmark-image-color"></div>
-		</div>
-		<div class="bookmark-info">
-			<div class="bookmark-info-name"><a href="http://test.com">{{bookmark.name}}</a></div>
-			<div class="bookmark-info-divider"></div>
-			<div class="bookmark-info-modified"><span>Edited</span> {{bookmark.modifiedDate}}</div>
-			<div class="bookmark-info-tags">
-				<span>Tags:</span><span class="bookmark-info-tags-tag" ng-repeat="tag in bookmark.tags">{{tag}}</span>
+<div id="bookmark-container" class="container">
+	<div class="bookmark col-md-4 col-sm-4" ng-repeat="bookmark in bookmarks">
+		<div class="bookmark-inner">
+			<div class="bookmark-image" ng-style="bookmark.style">
+				<div class="bookmark-image-color"></div>
+			</div>
+			<div class="bookmark-info">
+				<div class="bookmark-info-name"><a href="http://test.com">{{bookmark.name}}</a></div>
+				<div class="bookmark-info-divider"></div>
+				<div class="bookmark-info-modified"><span>Edited</span> {{bookmark.modifiedDate}}</div>
+				<div class="bookmark-info-tags">
+					<span>Tags:</span><span class="bookmark-info-tags-tag" ng-repeat="tag in bookmark.tags">{{tag}}</span>
+				</div>
+				<div class="btn-group bookmark-info-buttons">
+					<button type="button" class="btn btn-default bookmark-info-buttons-delete" ng-click="deleteBookmark(bookmark.id)">
+						<span class="glyphicon glyphicon-remove bookmark-info-buttons-delete-icon"></span>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
