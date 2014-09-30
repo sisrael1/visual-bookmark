@@ -98,31 +98,23 @@
 	    </div>
 	    <div class="collapse navbar-collapse navbar-right">
 	      <ul class="nav navbar-nav">
-	        <li ng-class="{active: title == 'Product' ? true : false}" ng-hide="isDashboard(title)"><a href="#product">Product</a></li>
-	        <li ng-class="{active: title == 'Dashboard' ? true : false}" ng-hide="isDashboard(title)"><a ng-click="signIn()">Tour</a></li>
-	        <li><a href="" ng-click="setPopUp('search')" ng-show="isDashboard(title)">Search</a></li>
-	        <li><a href="" ng-click="setPopUp('addBookmark')" ng-show="isDashboard(title)">Add Bookmark</a></li>
-	        <li ng-class="{active: title == 'Dashboard' ? true : false}" ng-show="signedIn"><a href="#dashboard">Dashboard</a></li>
-	        <li ng-class="{active: title == 'Settings' ? true : false}" ng-show="isDashboard(title)"><a href="#settings">Settings</a></li>
-	        <li ng-class="{active: title == 'Help' ? true : false}" ng-show="isDashboard(title)"><a href="#help">Help</a></li>
-	        <li><a href="" ng-click="setPopUp('signIn')" ng-hide="signedIn">Sign in</a></li>
-	        <li><a href="" ng-click="signOut()" ng-show="signedIn">Sign out</a></li>
+	      	<li ng-repeat="link in menuLinks" ng-class="{ active: link.route.id == $parent.currentPage.id }"><a ng-href="{{link.url == '' ? link.url : '#'}}{{ link.url ? link.url : link.route.originalPath }}" ng-click="execMenuAction({ id: link.id })">{{ link.text }}</a></li>
 	      </ul>
 	    </div>
 	  </div>
 	</div>
 
-	<div class="container" ng-if="showPopUp == 'signIn'">
+	<div class="container" ng-show="menuPopUpState == menuPopUpEnum.SIGN_IN">
 		<div id="login">
 			<form id="login-form">
-				<input id="login-submit" type="submit" value="Sign In" ng-click="signIn(signInForm.password, signInForm.username)" />
+				<input id="login-submit" type="submit" value="Sign In" ng-click="signIn()" />
 				<input id="login-password" type="password" ng-model="signInForm.password" />
 				<input id="login-username" type="textbox" ng-model="signInForm.username" />
 			</form>
 		</div>
 	</div>
 
-	<div class="container" ng-if="showPopUp == 'search'">
+	<div class="container" ng-show="menuPopUpState == menuPopUpEnum.SEARCH">
 		<div id="search">
 			<form id="search-form">
 				<input id="search-submit" type="submit" value="Search" ng-click="" />
@@ -131,7 +123,7 @@
 		</div>
 	</div>
 
-	<div class="container" ng-if="showPopUp == 'addBookmark'">
+	<div class="container" ng-show="menuPopUpState == menuPopUpEnum.ADD_BOOKMARK">
 		<div id="addBookmark">
 			<form id="addBookmark-form">
 				<input id="addBookmark-submit" type="submit" value="Add Bookmark" ng-click="" />

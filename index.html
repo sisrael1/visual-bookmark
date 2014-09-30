@@ -7,7 +7,7 @@
 		<title ng-bind="'Visual Bookmark - ' + title"></title>
 	</head>
 	<body>
-		<div ng-include="'assets/views/header.html'"></div>
+		<div ng-include="'assets/views/header.html'" ng-controller="HeaderController"></div>
 		
 		<div ng-view></div>
 
@@ -22,5 +22,6 @@
 		<script type="text/javascript" src="assets/app.js"></script>
 		<script type="text/javascript" src="assets/services/crudservice.js"></script>
 		<script type="text/javascript" src="assets/controllers/maincontroller.js"></script>
+		<script type="text/javascript" src="assets/controllers/headercontroller.js"></script>
 	</body>
 </html>

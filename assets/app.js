@@ -5,27 +5,32 @@ app.config(['$routeProvider', function ($routeProvider) {
 		.when('/', {
 			templateUrl: 'assets/views/index.html',
 			controller: 'MainController',
-			title: 'Home'
+			title: 'Home',
+			id: 1
 		})
 		.when('/product', {
 			templateUrl: 'assets/views/product.html',
 			controller: 'MainController',
-			title: 'Product'
+			title: 'Product',
+			id: 2
 		})
 		.when('/dashboard', {
 			templateUrl: 'assets/views/dashboard.html',
 			controller: 'MainController',
-			title: 'Dashboard'
+			title: 'Dashboard',
+			id: 3
 		})
 		.when('/settings', {
 			templateUrl: 'assets/views/settings.html',
 			controller: 'MainController',
-			title: 'Settings'
+			title: 'Settings',
+			id: 4
 		})
 		.when('/help', {
 			templateUrl: 'assets/views/help.html',
 			controller: 'MainController',
-			title: 'Help'
+			title: 'Help',
+			id: 5
 		})
 		.otherwise({
 			redirectTo: '/'
