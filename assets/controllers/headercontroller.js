@@ -63,18 +63,6 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 						route: $route.routes['/product'],
 						text: 'Product',
 						click: function () {}
-					},
-					{
-						id: 2,
-						route: $route.routes['/dashboard'],
-						text: 'Tour',
-						click: function () {}
-					},
-					{
-						id: 3,
-						route: $route.routes['/dashboard'],
-						text: 'Dashboard',
-						click: function () {}
 					}
 				];
 				break;
@@ -91,12 +79,6 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 						url: '',
 						text: 'Add Bookmark',
 						click: function () { $scope.menuPopUpState = $scope.menuPopUpState == $scope.menuPopUpEnum.ADD_BOOKMARK ? $scope.menuPopUpEnum.BLANK : $scope.menuPopUpEnum.ADD_BOOKMARK; }
-					},
-					{
-						id: 3,
-						route: $route.routes['/dashboard'],
-						text: 'Dashboard',
-						click: function () {}
 					},
 					{
 						id: 4,
@@ -117,6 +99,12 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 		switch ($scope.signedIn) {
 			case false:
 				$scope.menuLinks.push({
+					id: 2,
+					route: $route.routes['/dashboard'],
+					text: 'Tour',
+					click: function () {}
+				});
+				$scope.menuLinks.push({
 					id: 6,
 					url: '',
 					text: 'Sign in',
@@ -124,6 +112,12 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 				});
 				break;
 			case true:
+				$scope.menuLinks.push({
+					id: 3,
+					route: $route.routes['/dashboard'],
+					text: 'Dashboard',
+					click: function () {}
+				});
 				$scope.menuLinks.push({
 					id: 7,
 					url: '',
