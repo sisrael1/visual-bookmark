@@ -22,6 +22,17 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 	$scope.signedIn = false;
 	$scope.menuLinks = [];
 	$scope.currentPage;
+	$scope.signInForm = {
+		username:'Username',
+		password:'Password'
+	};
+	$scope.searchForm = {
+		text: ''
+	};
+
+	$scope.addBookmarkForm = {
+		url: ''
+	};
 
 	/*
 		HeaderController events

@@ -16,7 +16,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 		})
 		.when('/dashboard', {
 			templateUrl: 'assets/views/dashboard.html',
-			controller: 'MainController',
+			controller: 'DashboardController',
 			title: 'Dashboard',
 			id: 3
 		})
