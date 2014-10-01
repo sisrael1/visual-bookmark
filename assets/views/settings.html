@@ -1,84 +1,69 @@
-<style>
-	#content{
-		overflow: auto;
-		border: 1px solid black;
-		height: 90%;
-		width: 70%;
-		margin-left: 20%; /*Width of sidebar*/
-	}
-	#content ul
-	{
-		padding-left:0; /*Remove indentation for lists*/
-	}
-	#leftColumn{
-		float:left;
-		width: 30%;
-		padding-left: 20px;
-	}
-	#rightColumn{
-		float:right;
-		width: 50%;
-		border-left: 1px solid black;
-		margin-left: -41px; /*Sum of all padding-left + 1 px*/
-		padding-left: 20px;
-		margin-top: 50px;
-	}
-	#sidebarMenu{
-		float: left;
-		width: 20%;
-		margin-top: -16px;
-	}
-	#sidebarMenu ul li{
-		height: 60px;
-		border: 1px solid black;
-		list-style: none;
-		text-align: center;		
-	}
-</style>
-	
-	<div id="sidebarMenu">
+
+<div class="container">
+	<div id="sidebarMenu" class="col-md-2">
 		<ul>
-			<li><h3>General</h3></li>
-			<li><h3>Plugin</h3></li>
-			<li><h3>Account</h3></li>
+			<li>General</li>
+			<li>Plugin</li>
+			<li>Account</li>
 		</ul>
 	</div>
-	<div id="content">
-		<div id="leftColumn" ng-controller="SettingsController as settings">
-			<h1>Bookmark Settings</h1>
-			<ul style="list-style: none;">
-				<li ng-repeat="setting in settings.BMSettings"  style="text-decoration: none;">
-					<input type="checkbox" ng-show='{{setting.checked}}' checked/>
-					<input type="checkbox" ng-show='{{!setting.checked}}' />
-					{{setting.name}}
-				</li>
-			</ul>
-			<br/>
-			<br/>
-			<h1>Dashboard Settings</h1>
-			<ul style="list-style: none;">
-				<li ng-repeat="setting in settings.DBSettings"  style="text-decoration: none;">
-					<input type="checkbox" ng-show='{{setting.checked}}' checked/>
-					<input type="checkbox" ng-show='{{!setting.checked}}' />
-					{{setting.name}}
-				</li>
-			</ul>
-		</div>
-		<div id="rightColumn" ng-controller="SettingsController as settings">
-			<label>Default link behavior: </label>
-			<select>
-				<option value="">Open URL in same window</option>
-				<option value="">Display bookmark information</option> <!--Should this go under Bookmark settings?-->			
-			</select>
-			<br/>
-			<br/>
-			<ul style="list-style: none;">
-				<li ng-repeat="setting in settings.BMSettingsSwitch"  style="text-decoration: none;">
-					<input type="checkbox" ng-show='{{setting.checked}}' checked/>
-					<input type="checkbox" ng-show='{{!setting.checked}}' />
-					{{setting.name}}
-				</li>
-			</ul>
-		</div>
+	<div id="leftContent" class="col-md-5">
+		<h3>Bookmark Settings</h3>
+		<ul>
+			<li>
+				<input type="checkbox" />
+				<label>Display screenshots</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Archive deleted bookmarks</label>
+			</li>
+		</ul>
+		<h3>Dashboard Settings</h3>
+		<ul>
+			<li>
+				<input type="checkbox" />
+				<label>Display search icon</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Display Add Bookmark icon</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Display Settings icon</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Display Help icon</label>
+			</li>
+		</ul>
 	</div>
 	
+	<div id="rightContent" class="col-md-5">
+		<label>Default link behavior: </label>
+		<select>
+			<option value="">Open URL in same window</option>
+			<option value="">Display bookmark information</option> <!--Should this go under Bookmark settings?-->			
+		</select>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<ul>
+			<li>
+				<input type="checkbox" />
+				<label>Automatic refresh</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Infinite scrolling</label>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<label>Desktop notifications</label>
+			</li>
+		</ul>
+	</div>
+</div>

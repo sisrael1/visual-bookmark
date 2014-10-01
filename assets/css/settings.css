@@ -1,0 +1,32 @@
+	#sidebarMenu{
+		text-align: center;
+		padding: 0px;
+	}
+	#sidebarMenu ul{
+		list-style: none;
+		padding-left: 0px;
+	}
+	#sidebarMenu ul li{
+		height: 50px;
+		border: 1px solid black;
+		line-height: 50px;	
+	}
+	#leftContent {
+		padding-left: 40px;
+		margin-top: -10px;
+	}
+	#leftContent ul{
+		list-style: none;
+		padding-left: 0px;
+	}
+	#rightContent{
+		border-left: 1px solid black;
+		margin-top: 50px;
+	}
+	#rightContent ul{
+		list-style: none;
+		padding-left: 0px;
+	}
+	#content{
+		border:1px solid black;
+	}
