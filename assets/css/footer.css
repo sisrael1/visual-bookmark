@@ -4,8 +4,13 @@
 	background-color: #f8f8f8;
 }
 
-#footer a {
+#footer a{
+	color: #777;
+}
+
+#footer a:hover {
 	color: #333;
+	text-decoration:none;
 }
 
 .footer-list {
