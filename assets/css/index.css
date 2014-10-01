@@ -25,3 +25,9 @@
 #signup-username, #signup-password, #signup-submit {
 	margin-left: 1%;
 }
+.green-glyph{
+color: green;
+}
+.red-glyph{
+color:red;
+}
