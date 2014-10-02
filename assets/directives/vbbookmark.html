@@ -1,0 +1,18 @@
+<div class="bookmark-inner">
+	<div class="bookmark-image" ng-style="vbStyle">
+		<div class="bookmark-image-color"></div>
+	</div>
+	<div class="bookmark-info">
+		<div class="bookmark-info-name"><a href="http://test.com">{{title}}</a></div>
+		<div class="bookmark-info-divider"></div>
+		<div class="bookmark-info-modified"><span>Edited</span> {{createdDate}}</div>
+		<div class="bookmark-info-tags">
+			<span>Tags:</span><span class="bookmark-info-tags-tag" ng-repeat="tag in tags">{{tag}}</span>
+		</div>
+		<div class="btn-group bookmark-info-buttons">
+			<button type="button" class="btn btn-default bookmark-info-buttons-delete" ng-click="deleteBookmark(id)">
+				<span class="glyphicon glyphicon-remove bookmark-info-buttons-delete-icon"></span>
+			</button>
+		</div>
+	</div>
+</div>
