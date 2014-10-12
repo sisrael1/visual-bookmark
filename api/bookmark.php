@@ -1,5 +1,8 @@
 <?php
 
+require_once 'ientity.php';
+require_once 'entityproperty.php';
+
 class Bookmark implements IEntity {
 	public $EntityName = 'bookmark';
 

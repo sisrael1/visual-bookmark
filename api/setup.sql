@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS bookmark;
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+	user_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(256) NOT NULL,
+	password VARCHAR(256) NOT NULL,
+	email VARCHAR(256) NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE bookmark (
+	bookmark_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	title VARCHAR(256),
+	url VARCHAR(1024)
+) ENGINE=InnoDB;
+
+ALTER TABLE bookmark ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user(user_id);
+
+CREATE TABLE tag (
+	text VARCHAR(64) NOT NULL,
+	bookmark_id INTEGER NOT NULL,
+	CONSTRAINT pk_tag PRIMARY KEY (text, bookmark_id)
+) ENGINE=InnoDB;
+
+ALTER TABLE tag ADD CONSTRAINT fk_bookmark FOREIGN KEY (bookmark_id) REFERENCES bookmark(bookmark_id);

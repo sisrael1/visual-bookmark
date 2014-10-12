@@ -1,9 +1,9 @@
 <?php
 
 class EntityProperty {
-	protected $key;
-	protected $value;
-	protected $type;
+	public $key;
+	public $value;
+	public $type;
 
 	function __construct ($key, $value, $type) {
 		$this->key = $key;

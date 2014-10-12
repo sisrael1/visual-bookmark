@@ -1,24 +1,24 @@
 <?php
 
+require_once 'ientity.php';
+require_once 'entityproperty.php';
+
 class Tag implements IEntity {
 	public $EntityName = 'tag';
 
 	public $PrimaryKey;
 	public $BookmarkId;
-	public $Text;
 
 	public function Serialize () {
 		return array (
-			'tag_id' => new EntityProperty('tag_id', $this->PrimaryKey, 'int'),
-			'bookmark_id' => new EntityProperty('bookmark_id', $this->BookmarkId, 'int'),
-			'text' => new EntityProperty('text', $this->Text, 'string')
+			'text' => new EntityProperty('text', $this->PrimaryKey, 'string'),
+			'bookmark_id' => new EntityProperty('bookmark_id', $this->BookmarkId, 'int')
 		);
 	}
 
 	public function Deserialize ($user) {
-		$this->PrimaryKey = $user['tag_id']->value;
+		$this->PrimaryKey = $user['text']->value;
 		$this->BookmarkId = $user['bookmark_id']->value;
-		$this->Text = $user['text']->value;
 	}
 
 	public function getBookmark ($dataProvider) {
