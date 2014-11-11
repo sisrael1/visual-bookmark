@@ -11,13 +11,17 @@ class Bookmark implements IEntity {
 	public $Title;
 	public $Url;
 
-	public function Serialize () {
-		return array (
-			'bookmark_id' => new EntityProperty('bookmark_id', $this->PrimaryKey, 'int'),
+	public function Serialize ($withPrimaryKey = true) {
+		$serializedBookmark = array (
 			'user_id' => new EntityProperty('user_id', $this->UserId, 'int'),
 			'title' => new EntityProperty('title', $this->Title, 'string'),
 			'url' => new EntityProperty('url', $this->Url, 'string')
 		);
+
+		if ($withPrimaryKey)
+			$serializedBookmark['bookmark_id'] = new EntityProperty('bookmark_id', $this->PrimaryKey, 'int');
+
+		return $serializedBookmark;
 	}
 
 	public function Deserialize ($user) {

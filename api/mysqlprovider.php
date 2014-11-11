@@ -43,7 +43,7 @@ class MySQLProvider implements IDataProvider {
 		// TODO: GROUP BY $EntityName for multi-insert
 		// TODO: Change logic to use string join
 		foreach ($entities as $entity) {
-			$properties = $entity->Serialize();
+			$properties = $entity->Serialize(true);
 			$fields = ''; // Comma-delimited string of fields
 			$values = ''; // Comma-delimited '?' for binding
 			$types = ''; // String of types for mysqli

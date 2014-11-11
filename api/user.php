@@ -11,13 +11,17 @@ class User implements IEntity {
 	public $Password;
 	public $Email;
 
-	public function Serialize () {
-		return array(
-			'user_id' => new EntityProperty('user_id', $this->PrimaryKey, 'int'),
+	public function Serialize ($withPrimaryKey = true) {
+		$serializedUser = array(
 			'username' => new EntityProperty('username', $this->Username, 'string'),
 			'password' => new EntityProperty('password', $this->Password, 'string'),
 			'email' => new EntityProperty('email', $this->Email, 'string'),
 		);
+
+		if ($withPrimaryKey)
+			$serializedUser['user_id'] = new EntityProperty('user_id', $this->PrimaryKey, 'int');
+
+		return $serializedUser;
 	}
 
 	public function Deserialize ($user) {

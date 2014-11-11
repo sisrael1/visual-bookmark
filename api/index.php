@@ -21,9 +21,9 @@ $app = new \Slim\Slim();
 // that reads from a YAML/XML/JSON/etc file
 $app->dbConfig = array (
 	'mysql_domain' => 'localhost',
-	'mysql_username' => '',
-	'mysql_password' => '',
-	'mysql_database' => ''
+	'mysql_username' => 'sisrael1',
+	'mysql_password' => 'UU+HD2JebrayT',
+	'mysql_database' => 'sisrael1'
 );
 
 $app->dataProvider = new MySQLProvider($app->dbConfig);
@@ -67,6 +67,28 @@ $app->get('/bookmarks/:user_id', function ($user_id) use ($app) {
 	$results = $app->dataProvider->Retrieve(array($bookmark));
 
 	echo json_encode($results);
+});
+
+$app->post('/bookmarks', function () use ($app) {
+	$json = json_decode($app->request->getBody(), true);
+	$dbc = $app->dataProvider;
+
+	//Replace this with per-CRUD & per-Entity validator
+	//possibly at the middleware level
+	if (!is_array($json)) {
+		$app->response->setStatus(400);
+		return;
+	}
+
+	$bookmarks = array_map(function ($bookmark) {
+		$bookmarkObj = new Bookmark();
+		$bookmarkObj->UserId = $bookmark['user_id'];
+		$bookmarkObj->Title = $bookmark['title'];
+		$bookmarkObj->Url = $bookmark['url'];
+		return $bookmarkObj;
+	}, $json);
+
+	$dbc->Create($bookmarks);
 });
 
 //$app->put();

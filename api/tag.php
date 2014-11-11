@@ -9,7 +9,7 @@ class Tag implements IEntity {
 	public $PrimaryKey;
 	public $BookmarkId;
 
-	public function Serialize () {
+	public function Serialize ($withPrimaryKey = true) {
 		return array (
 			'text' => new EntityProperty('text', $this->PrimaryKey, 'string'),
 			'bookmark_id' => new EntityProperty('bookmark_id', $this->BookmarkId, 'int')
