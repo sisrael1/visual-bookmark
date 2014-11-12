@@ -38,10 +38,10 @@
 	</div>
 
 	<div class="container" ng-show="menuPopUpState == menuPopUpEnum.ADD_BOOKMARK">
-		<div id="addBookmark">
+		<div id="addBookmark" ng-submit="addBookmark(addBookmarkForm.url)">
 			<form id="addBookmark-form">
-				<input id="addBookmark-submit" type="submit" value="Add Bookmark" ng-click="" />
-				<input id="addBookmark-url" type="textbox" ng-model="addBookmarkForm.url" />
+				<input id="addBookmark-submit" type="submit" value="Add Bookmark" />
+				<input id="addBookmark-url" type="url" required ng-class="{ badForm: addBookmarkFailure }" ng-model="addBookmarkForm.url" />
 			</form>
 		</div>
 	</div>

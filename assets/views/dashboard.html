@@ -1,9 +1,9 @@
 <div id="bookmark-container" class="container">
 	<div class="bookmark col-md-4 col-sm-6 col-xs-12" ng-repeat="bookmark in bookmarks">
 		<vb-bookmark
-			x-id="bookmark.id",
-			x-title="bookmark.name",
-			x-url="'test.com'",
+			x-id="bookmark.user_id",
+			x-title="bookmark.title",
+			x-url="bookmark.url",
 			x-created-date="bookmark.modifiedDate",
 			x-tags="bookmark.tags",
 			x-vb-style="bookmark.style"

@@ -21,9 +21,9 @@ $app = new \Slim\Slim();
 // that reads from a YAML/XML/JSON/etc file
 $app->dbConfig = array (
 	'mysql_domain' => 'localhost',
-	'mysql_username' => 'sisrael1',
-	'mysql_password' => 'UU+HD2JebrayT',
-	'mysql_database' => 'sisrael1'
+	'mysql_username' => '',
+	'mysql_password' => '',
+	'mysql_database' => ''
 );
 
 $app->dataProvider = new MySQLProvider($app->dbConfig);
@@ -80,15 +80,25 @@ $app->post('/bookmarks', function () use ($app) {
 		return;
 	}
 
-	$bookmarks = array_map(function ($bookmark) {
+	$bookmarks = array_map(function ($bookmark) use ($app) {
 		$bookmarkObj = new Bookmark();
 		$bookmarkObj->UserId = $bookmark['user_id'];
 		$bookmarkObj->Title = $bookmark['title'];
 		$bookmarkObj->Url = $bookmark['url'];
+
+		$isValidUrl = filter_var($bookmarkObj->Url, FILTER_VALIDATE_URL);
+		if (!$isValidUrl || $isValidUrl == "" || isset($isValidUrl)) {
+			$app->response->setStatus(400);
+		}
+
 		return $bookmarkObj;
 	}, $json);
 
-	$dbc->Create($bookmarks);
+	if ($app->response->getStatus() == 400)
+		return;
+
+	if (!$dbc->Create($bookmarks))
+		$app->response->setStatus(400);
 });
 
 //$app->put();

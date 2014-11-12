@@ -152,6 +152,20 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 		$scope.menuPopUpState = $scope.menuPopUpEnum.BLANK;
 	};
 
+	$scope.addBookmarkFailure = false;
+	$scope.addBookmark = function (args) {
+		crudService.create('/bookmarks', [{
+			"user_id": 1,
+			"title": args,
+			"url": args
+		}]).then(function (data, status, headers, config) {
+			$rootScope.$broadcast('AddBookmarkSuccess');
+			$scope.addBookmarkFailure = false;
+		}, function (data, status, headers, config) {
+			$scope.addBookmarkFailure = true;
+		});
+	};
+
 	/*
 		HeaderController state initialization
 	*/

@@ -11,10 +11,10 @@ app.factory('crudService', ['$http', '$q', function ($http, $q) {
 				data: JSON.stringify(params)
 			})
 				.success(function(data, status, headers, config) {
-					defer.resolve(data);
+					defer.resolve(data, status, headers, config);
 				})
 				.error(function(data, status, headers, config) {
-					defer.reject(data);
+					defer.reject(data, status, headers, config);
 				});
 
 			return defer.promise;
@@ -25,10 +25,10 @@ app.factory('crudService', ['$http', '$q', function ($http, $q) {
 
 			$http({ method: 'GET', url: apiRoot + location, params: params })
 				.success(function(data, status, headers, config) {
-					defer.resolve(data);
+					defer.resolve(data, status, headers, config);
 				})
 				.error(function(data, status, headers, config) {
-					defer.reject(data);
+					defer.reject(data, status, headers, config);
 				});
 
 			return defer.promise;
@@ -43,10 +43,10 @@ app.factory('crudService', ['$http', '$q', function ($http, $q) {
 				data: JSON.stringify(params)
 			})
 				.success(function(data, status, headers, config) {
-					defer.resolve(data);
+					defer.resolve(data, status, headers, config);
 				})
 				.error(function(data, status, headers, config) {
-					defer.reject(data);
+					defer.reject(data, status, headers, config);
 				});
 
 			return defer.promise;
@@ -61,10 +61,10 @@ app.factory('crudService', ['$http', '$q', function ($http, $q) {
 				data: JSON.stringify(params)
 			})
 				.success(function(data, status, headers, config) {
-					defer.resolve(data);
+					defer.resolve(data, status, headers, config);
 				})
 				.error(function(data, status, headers, config) {
-					defer.reject(data);
+					defer.reject(data, status, headers, config);
 				});
 
 			return defer.promise;

@@ -81,3 +81,7 @@ body {
 #addBookmark-submit {
 	margin-left: 1%;
 }
+
+.badForm {
+	background-color: #FFDDDD;
+}

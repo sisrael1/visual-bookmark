@@ -71,6 +71,13 @@ class MySQLProvider implements IDataProvider {
 			array_unshift($valuesArr, &$types);
 			call_user_func_array(array($stmt, "bind_param"), $valuesArr);
 			$stmt->execute();
+
+			$error = $this->mysqli->error;
+			if ($error != "") {
+				return false;
+			}
+			
+			return true;
 		}
 	}
 
