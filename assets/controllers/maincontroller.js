@@ -1,25 +1,20 @@
-app.controller('MainController', ['$rootScope','$scope', '$route', '$location', 'crudService', function ($rootScope, $scope, $route, $location, crudService) {
-	$scope.txt;
+app.controller('MainController', ['$scope', '$route', '$resource', 'configService', 'authService', function ($scope, $route, $resource, configService, authService) {
+	$scope.signUp = function (email, username, password) {
+		var credentials = [{
+			email: email,
+			username: username,
+			password: password
+		}];
 
-	$scope.signUpForm = {
-		accountName:'Account Name',
-		username:'Username',
-		password:'Password'
-	};
-	$scope.signUp = function (accountName, username, password) {
-		alert(accountName + ' ' + username + ' ' + password);
+		var User = $resource(configService.apiRoot + '/users');
+
+		User.save(credentials, function () {
+			var x = authService.login(credentials[0]);
+			x.then(function () { console.log(x); });
+		});
 	};
 
 	$scope.$on('$routeChangeSuccess', function (event, current, previous) {
 		$scope.title = $route.current.title;
 	});
-
-	$scope.getTxt = function () {
-		crudService.read('/hello/world!')
-		.then(function (data) {
-			$scope.txt = data;
-		});
-	};
-
-	$scope.getTxt();
 }]);

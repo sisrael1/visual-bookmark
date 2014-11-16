@@ -13,6 +13,7 @@ require_once 'bookmark.php';
 require_once 'mysqlprovider.php';
 require_once 'tag.php';
 require_once 'user.php';
+require_once 'token.php';
 
 $app = new \Slim\Slim();
 
@@ -21,9 +22,9 @@ $app = new \Slim\Slim();
 // that reads from a YAML/XML/JSON/etc file
 $app->dbConfig = array (
 	'mysql_domain' => 'localhost',
-	'mysql_username' => '',
-	'mysql_password' => '',
-	'mysql_database' => ''
+	'mysql_username' => 'sisrael1',
+	'mysql_password' => 'UU+HD2JebrayT',
+	'mysql_database' => 'sisrael1'
 );
 
 $app->dataProvider = new MySQLProvider($app->dbConfig);
@@ -50,6 +51,11 @@ $app->post('/users', function() use ($app) {
 	$req = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
 
+	if (!is_array($req)) {
+		$app->response->setStatus(400);
+		return;
+	}
+
 	$users = array_map(function ($user) {
 		$userObj = new User();
 		$userObj->Username = $user['username'];
@@ -57,6 +63,8 @@ $app->post('/users', function() use ($app) {
 		$userObj->Email = $user['email'];
 		return $userObj;
 	}, $req);
+
+	echo var_dump($users);
 
 	$dbc->Create($users);
 });
@@ -87,7 +95,7 @@ $app->post('/bookmarks', function () use ($app) {
 		$bookmarkObj->Url = $bookmark['url'];
 
 		$isValidUrl = filter_var($bookmarkObj->Url, FILTER_VALIDATE_URL);
-		if (!$isValidUrl || $isValidUrl == "" || isset($isValidUrl)) {
+		if (!$isValidUrl || $isValidUrl == "" || !isset($isValidUrl)) {
 			$app->response->setStatus(400);
 		}
 
@@ -99,6 +107,38 @@ $app->post('/bookmarks', function () use ($app) {
 
 	if (!$dbc->Create($bookmarks))
 		$app->response->setStatus(400);
+});
+
+$app->post('/token', function () use ($app) {
+	$json = json_decode($app->request->getBody(), true);
+	$dbc = $app->dataProvider;
+
+	$userObj = new User();
+	$userObj->Username = $json['username'];
+	$userObj->Password = $json['password'];
+
+	$users = $dbc->Retrieve(array($userObj));
+	if (empty($users)) {
+		echo json_encode($users);
+		echo json_encode($userObj);
+		$app->response->setStatus(404);
+		return;
+	}
+
+	$user = $users[0];
+	$token = new Token($user['user_id']);
+	if (!$dbc->Create(array($token))) {
+		$app->response->setStatus(500);
+		return;
+	}
+
+	echo json_encode(array(
+		'token_string' => $token->TokenString
+	));
+});
+
+$app->delete('/token', function () use ($app) {
+
 });
 
 //$app->put();

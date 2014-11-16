@@ -16,7 +16,7 @@
 	padding: 10px 0px 10px 0px;
 }
 
-#signup-accountname, #signup-username, #signup-password, #signup-submit {
+#signup-email, #signup-username, #signup-password, #signup-submit {
 	width: 24.25%;
 	height: 100%;
 	float: right;

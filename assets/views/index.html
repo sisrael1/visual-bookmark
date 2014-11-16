@@ -8,10 +8,10 @@
 <div id="signup">
 	<div class="container">
 		<form id="signup-form">
-			<input id="signup-submit" type="submit" value="Try it now!" ng-click="signUp(signUpForm.accountName, signUpForm.username, signUpForm.password)" />
-			<input id="signup-password" type="password" ng-model="signUpForm.password" />
-			<input id="signup-username" type="textbox" ng-model="signUpForm.username" />
-			<input id="signup-accountname" type="textbox" ng-model="signUpForm.accountName" />
+			<input id="signup-submit" type="submit" value="Try it now!" ng-click="signUp(signUpForm.email, signUpForm.username, signUpForm.password)" />
+			<input id="signup-password" type="password" placeholder="Password" ng-model="signUpForm.password" />
+			<input id="signup-username" type="textbox" placeholder="Username" ng-model="signUpForm.username" />
+			<input id="signup-email" type="textbox" placeholder="Email" ng-model="signUpForm.email" />
 		</form>
 	</div>
 </div>
