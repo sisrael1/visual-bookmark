@@ -148,5 +148,4 @@ $app->delete('/token', function () use ($app) {
 
 });
 
-
 $app->run();
