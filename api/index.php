@@ -15,6 +15,10 @@ require_once 'tag.php';
 require_once 'user.php';
 require_once 'token.php';
 
+/*
+	SET UP GLOBAL RESOURCE STORAGE
+*/
+
 $app = new \Slim\Slim();
 
 // Register resources for dependency injection
@@ -29,24 +33,15 @@ $app->dbConfig = array (
 
 $app->dataProvider = new MySQLProvider($app->dbConfig);
 
-//Routes
-$app->get('/hello/:name', function ($name) {
-	echo "Hello, $name";
-});
-
 /*
-$app->get('/users', function () use ($app) {
-	$results = $app->dataProvider->Retrieve(array(new User()));
-
-	//Don't let users see a field
-	for ($i = 0; $i < count($results); $i++) {
-		unset($results[$i]['password']);
-	}
-
-	echo json_encode($results);
-});
+	ROUTES
 */
 
+
+/**
+ * Takes an array of User objects via POST data.
+ * Persists each User object.
+ */
 $app->post('/users', function() use ($app) {
 	$req = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
@@ -69,6 +64,9 @@ $app->post('/users', function() use ($app) {
 	$dbc->Create($users);
 });
 
+/**
+ * Returns a User by its user_id.
+ */
 $app->get('/bookmarks/:user_id', function ($user_id) use ($app) {
 	$bookmark = new Bookmark();
 	$bookmark->UserId = $user_id;
@@ -77,6 +75,11 @@ $app->get('/bookmarks/:user_id', function ($user_id) use ($app) {
 	echo json_encode($results);
 });
 
+
+/**
+ * Takes an array of Bookmark objects via POST data.
+ * Persists each Bookmark object.
+ */
 $app->post('/bookmarks', function () use ($app) {
 	$json = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
@@ -109,6 +112,10 @@ $app->post('/bookmarks', function () use ($app) {
 		$app->response->setStatus(400);
 });
 
+/**
+ * Takes a username and password via POST data.
+ * Returns a persisted token.
+ */
 $app->post('/token', function () use ($app) {
 	$json = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
@@ -141,8 +148,5 @@ $app->delete('/token', function () use ($app) {
 
 });
 
-//$app->put();
-
-//$app->delete();
 
 $app->run();
