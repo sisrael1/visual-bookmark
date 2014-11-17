@@ -5,6 +5,8 @@ require_once 'entityproperty.php';
 
 class User implements IEntity {
 	public $EntityName = 'user';
+	public $PrimaryKeyName = 'user_id';
+	public $PrimaryKeyType = 'int';
 
 	public $PrimaryKey;
 	public $Username;

@@ -5,6 +5,8 @@ require_once 'entityproperty.php';
 
 class Tag implements IEntity {
 	public $EntityName = 'tag';
+	public $PrimaryKeyName = 'text';
+	public $PrimaryKeyType = 'string';
 
 	public $PrimaryKey;
 	public $BookmarkId;

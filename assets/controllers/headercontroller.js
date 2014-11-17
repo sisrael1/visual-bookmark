@@ -154,14 +154,14 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 
 	$scope.addBookmarkFailure = false;
 	$scope.addBookmark = function (args) {
-		crudService.create('/bookmarks', [{
-			"user_id": 1,
+		crudService.create('/users/1/bookmarks', {
 			"title": args,
 			"url": args
-		}]).then(function (data, status, headers, config) {
+		}).then(function (data, status, headers, config) {
 			$rootScope.$broadcast('AddBookmarkSuccess');
 			$scope.addBookmarkFailure = false;
 		}, function (data, status, headers, config) {
+			console.log(data);
 			$scope.addBookmarkFailure = true;
 		});
 	};

@@ -15,14 +15,14 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 	*/
 	$scope.bookmarks;
 
-	crudService.read('/bookmarks/1')
+	crudService.read('/users/1/bookmarks')
 	.then(function (data) {
 		$scope.bookmarks = data;
 		console.log($scope.bookmarks);
 	});
 
 	$scope.$on('AddBookmarkSuccess', function() {
-		crudService.read('/bookmarks/1')
+		crudService.read('/users/1/bookmarks')
 		.then(function (data) {
 			$scope.bookmarks = data;
 			console.log($scope.bookmarks);
