@@ -119,7 +119,6 @@ class MySQLProvider implements IDataProvider {
 				array_unshift($values, &$types);
 				call_user_func_array(array($stmt, "bind_param"), $values);
 				call_user_func_array(array($stmt, "bind_result"), &$results);
-				echo var_dump($stmt);
 				$stmt->execute();
 			}
 
