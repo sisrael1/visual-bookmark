@@ -6,7 +6,8 @@ app.directive('vbBookmark', function () {
 			url: '=',
 			createdDate: '=',
 			tags: '=',
-			vbStyle: '='
+			vbStyle: '=',
+			deleteButton: '&'
 		},
 		templateUrl: 'assets/directives/vbbookmark.html',
 		restrict: 'E'

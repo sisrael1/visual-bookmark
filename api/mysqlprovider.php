@@ -167,9 +167,25 @@ class MySQLProvider implements IDataProvider {
 	public function Delete ($entity) {
 		// Mark the deleted flag for the entity
 		// identified by its primary key
+		$predicate = array();
+		$values = array();
+		$types = '';
+
+		$properties = $entity->Serialize();
+		foreach ($properties as $property) {
+			if ($property->key && $property->value && $property->type) {
+				array_push($predicate, "$property->key = ?");
+				array_push($values, &$property->value);
+				$types = $types . $this->toTypeSpecifier($property->type);
+			}
+		}
+
+		$predicateString = join(' AND ', $predicate);
+		array_unshift($values, &$types);
+
 		$stmt = $this->mysqli->stmt_init();
-		$stmt->prepare("DELETE FROM $entity->EntityName WHERE $entity->PrimaryKeyName = ?");
-		$stmt->bind_param($this->toTypeSpecifier($entity->PrimaryKeyType), $entity->PrimaryKey);
+		$stmt->prepare("DELETE FROM $entity->EntityName WHERE $predicateString");
+		call_user_func_array(array($stmt, "bind_param"), $values);
 		$stmt->execute();
 
 		if ($stmt->affected_rows < 1)

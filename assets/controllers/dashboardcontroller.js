@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', function ($rootScope, $scope, crudService) {
+app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$resource', function ($rootScope, $scope, crudService, $resource) {
 	/*
 		DashboardController events
 	*/
@@ -41,7 +41,9 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 	};
 
 	$scope.deleteBookmark = function (id) {
-		$scope.bookmarks = _.reject($scope.bookmarks, { id: id });
+		console.log(id);
+		var Bookmark = $resource('/api/index.php/users/1/bookmarks/' + id);
+		Bookmark.delete();
 	};
 
 	$scope.search = function (text) {

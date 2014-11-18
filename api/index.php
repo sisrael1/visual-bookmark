@@ -85,9 +85,9 @@ $app->post('/users/:user_id/bookmarks', function ($user_id) use ($app) {
 	$dbc = $app->dataProvider;
 
 	$bookmark = new Bookmark();
-	$bookmark->UserId = $user_id;
-	$bookmark->Title = $json['title'];
-	$bookmark->Url = $json['url'];
+	$bookmark->UserId = isset($user_id) ? $user_id : null;
+	$bookmark->Title = isset($json['title']) ? $json['title'] : null;
+	$bookmark->Url = isset($json['url']) ? $json['url'] : null;
 
 	$isValidUrl = filter_var($bookmark->Url, FILTER_VALIDATE_URL);
 	if (!$isValidUrl || $isValidUrl == "" || !isset($isValidUrl)) {
@@ -96,6 +96,23 @@ $app->post('/users/:user_id/bookmarks', function ($user_id) use ($app) {
 	}
 
 	if (!$dbc->Create($bookmark))
+		$app->response->setStatus(500);
+});
+
+$app->delete('/users/:user_id/bookmarks/:bookmark_id', function ($user_id, $bookmark_id) use ($app) {
+	$dbc = $app->dataProvider;
+
+	// Try to roll back if fails!!
+	$tag = new Tag();
+	$tag->BookmarkId = $bookmark_id;
+	if (!$dbc->Delete($tag))
+		$app->response->setStatus(500);
+
+	$bookmark = new Bookmark();
+	$bookmark->PrimaryKey = $bookmark_id;
+	$bookmark->UserId = $user_id;
+
+	if (!$dbc->Delete($bookmark))
 		$app->response->setStatus(500);
 });
 
