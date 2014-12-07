@@ -9,6 +9,9 @@ app.directive('vbBookmark', function () {
 			vbStyle: '=',
 			deleteButton: '&'
 		},
+		link: function (scope,element,attrs) {
+			console.log(scope.deleteButton(1));
+		},
 		templateUrl: 'assets/directives/vbbookmark.html',
 		restrict: 'E'
 	};

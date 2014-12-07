@@ -29,6 +29,14 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$
 		});
 	});
 
+	$scope.$on('DeleteBookmarkSuccess', function() {
+		crudService.read('/users/1/bookmarks')
+		.then(function (data) {
+			$scope.bookmarks = data;
+			console.log($scope.bookmarks);
+		});
+	});
+
 	/*
 		DashboardController functions
 	*/
@@ -41,9 +49,10 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$
 	};
 
 	$scope.deleteBookmark = function (id) {
-		console.log(id);
-		var Bookmark = $resource('/api/index.php/users/1/bookmarks/' + id);
+		console.log($scope.bookmarks);
+		var Bookmark = $resource('api/index.php/users/1/bookmarks/' + id);
 		Bookmark.delete();
+		$scope.$emit('DeleteBookmarkSuccess');
 	};
 
 	$scope.search = function (text) {
