@@ -9,6 +9,7 @@ app.controller('MainController', ['$scope', '$route', '$resource', 'configServic
 		var User = $resource(configService.apiRoot + '/users');
 
 		User.save(credentials, function () {
+			console.log("Logging in");
 			authService.login(credentials);
 		});
 	};

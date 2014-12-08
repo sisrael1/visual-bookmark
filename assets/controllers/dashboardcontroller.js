@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$resource', function ($rootScope, $scope, crudService, $resource) {
+app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$resource', 'authService', function ($rootScope, $scope, crudService, $resource, authService) {
 	/*
 		DashboardController events
 	*/
@@ -15,26 +15,20 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$
 	*/
 	$scope.bookmarks;
 
-	crudService.read('/users/1/bookmarks')
-	.then(function (data) {
-		$scope.bookmarks = data;
-		console.log($scope.bookmarks);
-	});
-
 	$scope.$on('AddBookmarkSuccess', function() {
-		crudService.read('/users/1/bookmarks')
-		.then(function (data) {
-			$scope.bookmarks = data;
-			console.log($scope.bookmarks);
-		});
+		$scope.refreshBookmarks();
 	});
 
 	$scope.$on('DeleteBookmarkSuccess', function() {
-		crudService.read('/users/1/bookmarks')
-		.then(function (data) {
-			$scope.bookmarks = data;
-			console.log($scope.bookmarks);
-		});
+		$scope.refreshBookmarks();
+	});
+
+	$scope.$on('LoginSuccess', function () {
+		$scope.refreshBookmarks();
+	});
+
+	$scope.$on('LogoutSuccess', function () {
+		$scope.bookmarks = undefined;
 	});
 
 	/*
@@ -49,13 +43,22 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$
 	};
 
 	$scope.deleteBookmark = function (id) {
-		console.log($scope.bookmarks);
-		var Bookmark = $resource('api/index.php/users/1/bookmarks/' + id);
-		Bookmark.delete();
-		$scope.$emit('DeleteBookmarkSuccess');
+		var Bookmark = $resource('api/index.php/users/' + authService.getSession().user_id + '/bookmarks/' + id);
+		Bookmark.delete().$promise.then(function (data) {
+			$scope.$emit('DeleteBookmarkSuccess');
+		});
 	};
 
 	$scope.search = function (text) {
 
 	};
+
+	$scope.refreshBookmarks = function () {
+		crudService.read('/users/' + authService.getSession().user_id + '/bookmarks')
+		.then(function (data) {
+			$scope.bookmarks = data;
+		});
+	};
+
+	$scope.refreshBookmarks();
 }]);

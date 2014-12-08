@@ -143,7 +143,13 @@ $app->post('/token', function () use ($app) {
 });
 
 $app->delete('/token/:user_id', function ($user_id) use ($app) {
-	
+	$json = json_decode($app->request->getBody(), true);
+	$dbc = $app->dataProvider;
+
+	$tokenObj = new Token($user_id);
+	$tokenObj->TokenString = $json['session_token'];
+
+	$dbc->Delete($tokenObj);
 });
 
 $app->run();

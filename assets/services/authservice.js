@@ -5,7 +5,7 @@ app.factory('authService', ['$rootScope', '$resource', 'configService', function
 		token_string: undefined
 	};
 	//Move this to its own file
-	var Token = $resource(configService.apiRoot + '/token');
+	var Token = $resource(configService.apiRoot + '/token/:user_id', {user_id:'@id'});
 
 	return {
 		login: function (credentials) {
@@ -26,6 +26,7 @@ app.factory('authService', ['$rootScope', '$resource', 'configService', function
 
 		logout: function () {
 			return Token.delete({
+				user_id: session.user_id,
 				session_token: session.session_token
 			}, function (value, responseHeaders) {
 				delete session.user_id;

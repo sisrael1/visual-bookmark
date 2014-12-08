@@ -185,7 +185,6 @@ class MySQLProvider implements IDataProvider {
 
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare("DELETE FROM $entity->EntityName WHERE $predicateString");
-		echo "DELETE FROM $entity->EntityName WHERE $predicateString";
 		call_user_func_array(array($stmt, "bind_param"), $values);
 		$stmt->execute();
 
