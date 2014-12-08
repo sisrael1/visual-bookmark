@@ -1,4 +1,4 @@
-app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudService', function ($rootScope, $scope, $route, crudService) {
+app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudService', 'authService', function ($rootScope, $scope, $route, crudService, authService) {
 	/*
 		HeaderController constants
 	*/
@@ -51,13 +51,12 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 		};
 	});
 
-	$scope.$on('SignInSuccess', function () {
-		console.log('Hello');
+	$scope.$on('LoginSuccess', function () {
 		$scope.signedIn = true;
 		$scope.setMenuLinks();
 	});
 
-	$scope.$on('SignOutSuccess', function () {
+	$scope.$on('LogoutSuccess', function () {
 		$scope.signedIn = false;
 		$scope.setMenuLinks();
 	});
@@ -133,7 +132,7 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 					id: 7,
 					url: '',
 					text: 'Sign out',
-					click: function () { $scope.$emit('SignOutSuccess'); }
+					click: function () { authService.logout(); }
 				});
 				break;
 		}
@@ -147,21 +146,25 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 				link.click(args);
 	};
 
-	$scope.signIn = function (args) {
-		$scope.$emit('SignInSuccess');
-		$scope.menuPopUpState = $scope.menuPopUpEnum.BLANK;
+	$scope.signIn = function (username, password) {
+		authService.login({
+			username: username,
+			password: password
+		}).then(function (data, status, headers, config) {
+			$scope.menuPopUpState = $scope.menuPopUpEnum.BLANK;
+		});
 	};
 
 	$scope.addBookmarkFailure = false;
 	$scope.addBookmark = function (args) {
-		crudService.create('/bookmarks', [{
-			"user_id": 1,
+		crudService.create('/users/' + authService.getSession().user_id + '/bookmarks', {
 			"title": args,
 			"url": args
-		}]).then(function (data, status, headers, config) {
+		}).then(function (data, status, headers, config) {
 			$rootScope.$broadcast('AddBookmarkSuccess');
 			$scope.addBookmarkFailure = false;
 		}, function (data, status, headers, config) {
+			console.log(data);
 			$scope.addBookmarkFailure = true;
 		});
 	};

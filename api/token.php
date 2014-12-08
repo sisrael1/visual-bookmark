@@ -5,6 +5,8 @@ require_once 'entityproperty.php';
 
 class Token implements IEntity {
 	public $EntityName = 'token';
+	public $PrimaryKeyName = 'token_id';
+	public $PrimaryKeyType = 'int';
 
 	public $PrimaryKey;
 	public $UserId;

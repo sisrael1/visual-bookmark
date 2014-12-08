@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', function ($rootScope, $scope, crudService) {
+app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', '$resource', 'authService', function ($rootScope, $scope, crudService, $resource, authService) {
 	/*
 		DashboardController events
 	*/
@@ -15,18 +15,20 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 	*/
 	$scope.bookmarks;
 
-	crudService.read('/bookmarks/1')
-	.then(function (data) {
-		$scope.bookmarks = data;
-		console.log($scope.bookmarks);
+	$scope.$on('AddBookmarkSuccess', function() {
+		$scope.refreshBookmarks();
 	});
 
-	$scope.$on('AddBookmarkSuccess', function() {
-		crudService.read('/bookmarks/1')
-		.then(function (data) {
-			$scope.bookmarks = data;
-			console.log($scope.bookmarks);
-		});
+	$scope.$on('DeleteBookmarkSuccess', function() {
+		$scope.refreshBookmarks();
+	});
+
+	$scope.$on('LoginSuccess', function () {
+		$scope.refreshBookmarks();
+	});
+
+	$scope.$on('LogoutSuccess', function () {
+		$scope.bookmarks = undefined;
 	});
 
 	/*
@@ -41,10 +43,22 @@ app.controller('DashboardController', ['$rootScope', '$scope', 'crudService', fu
 	};
 
 	$scope.deleteBookmark = function (id) {
-		$scope.bookmarks = _.reject($scope.bookmarks, { id: id });
+		var Bookmark = $resource('api/index.php/users/' + authService.getSession().user_id + '/bookmarks/' + id);
+		Bookmark.delete().$promise.then(function (data) {
+			$scope.$emit('DeleteBookmarkSuccess');
+		});
 	};
 
 	$scope.search = function (text) {
 
 	};
+
+	$scope.refreshBookmarks = function () {
+		crudService.read('/users/' + authService.getSession().user_id + '/bookmarks')
+		.then(function (data) {
+			$scope.bookmarks = data;
+		});
+	};
+
+	$scope.refreshBookmarks();
 }]);

@@ -1,12 +1,13 @@
 <div id="bookmark-container" class="container">
-	<div class="bookmark col-md-4 col-sm-6 col-xs-12" ng-repeat="bookmark in bookmarks">
+	<div class="bookmark col-md-4 col-sm-6 col-xs-12" ng-repeat="bookmark in bookmarks track by bookmark.bookmark_id">
 		<vb-bookmark
-			x-id="bookmark.user_id",
+			x-bookmark-id="bookmark.bookmark_id",
 			x-title="bookmark.title",
 			x-url="bookmark.url",
 			x-created-date="bookmark.modifiedDate",
 			x-tags="bookmark.tags",
-			x-vb-style="bookmark.style"
+			x-vb-style="bookmark.style",
+			x-delete-button="deleteBookmark"
 		></vb-bookmark>
 	</div>
 </div>

@@ -5,6 +5,8 @@ require_once 'entityproperty.php';
 
 class Bookmark implements IEntity {
 	public $EntityName = 'bookmark';
+	public $PrimaryKeyName = 'bookmark_id';
+	public $PrimaryKeyType = 'int';
 
 	public $PrimaryKey;
 	public $UserId;

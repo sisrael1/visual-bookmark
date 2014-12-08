@@ -43,34 +43,29 @@ $app->dataProvider = new MySQLProvider($app->dbConfig);
  * Persists each User object.
  */
 $app->post('/users', function() use ($app) {
-	$req = json_decode($app->request->getBody(), true);
+	$json = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
 
-	if (!is_array($req)) {
-		$app->response->setStatus(400);
+	$user = new User();
+	$user->Username = $json['username'];
+	$user->Password = $json['password'];
+	$user->Email = $json['email'];
+
+	if (!$dbc->Create($user)) {
+		$app->response->setStatus(500);
 		return;
 	}
-
-	$users = array_map(function ($user) {
-		$userObj = new User();
-		$userObj->Username = $user['username'];
-		$userObj->Password = $user['password'];
-		$userObj->Email = $user['email'];
-		return $userObj;
-	}, $req);
-
-	echo var_dump($users);
-
-	$dbc->Create($users);
 });
 
 /**
- * Returns a User by its user_id.
+ * Returns Bookmarks by user_id.
  */
-$app->get('/bookmarks/:user_id', function ($user_id) use ($app) {
+$app->get('/users/:user_id/bookmarks', function ($user_id) use ($app) {
+	$dbc = $app->dataProvider;
+
 	$bookmark = new Bookmark();
 	$bookmark->UserId = $user_id;
-	$results = $app->dataProvider->Retrieve(array($bookmark));
+	$results = $app->dataProvider->Retrieve($bookmark);
 
 	echo json_encode($results);
 });
@@ -80,36 +75,40 @@ $app->get('/bookmarks/:user_id', function ($user_id) use ($app) {
  * Takes an array of Bookmark objects via POST data.
  * Persists each Bookmark object.
  */
-$app->post('/bookmarks', function () use ($app) {
+$app->post('/users/:user_id/bookmarks', function ($user_id) use ($app) {
 	$json = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
 
-	//Replace this with per-CRUD & per-Entity validator
-	//possibly at the middleware level
-	if (!is_array($json)) {
+	$bookmark = new Bookmark();
+	$bookmark->UserId = isset($user_id) ? $user_id : null;
+	$bookmark->Title = isset($json['title']) ? $json['title'] : null;
+	$bookmark->Url = isset($json['url']) ? $json['url'] : null;
+
+	$isValidUrl = filter_var($bookmark->Url, FILTER_VALIDATE_URL);
+	if (!$isValidUrl || $isValidUrl == "" || !isset($isValidUrl)) {
+		echo $bookmark->Url;
 		$app->response->setStatus(400);
 		return;
 	}
 
-	$bookmarks = array_map(function ($bookmark) use ($app) {
-		$bookmarkObj = new Bookmark();
-		$bookmarkObj->UserId = $bookmark['user_id'];
-		$bookmarkObj->Title = $bookmark['title'];
-		$bookmarkObj->Url = $bookmark['url'];
+	if (!$dbc->Create($bookmark))
+		$app->response->setStatus(500);
+});
 
-		$isValidUrl = filter_var($bookmarkObj->Url, FILTER_VALIDATE_URL);
-		if (!$isValidUrl || $isValidUrl == "" || !isset($isValidUrl)) {
-			$app->response->setStatus(400);
-		}
+$app->delete('/users/:user_id/bookmarks/:bookmark_id', function ($user_id, $bookmark_id) use ($app) {
+	$dbc = $app->dataProvider;
 
-		return $bookmarkObj;
-	}, $json);
+	// Try to roll back if fails!!
+	$tag = new Tag();
+	$tag->BookmarkId = $bookmark_id;
+	$dbc->Delete($tag);
 
-	if ($app->response->getStatus() == 400)
-		return;
+	$bookmark = new Bookmark();
+	$bookmark->PrimaryKey = $bookmark_id;
+	$bookmark->UserId = $user_id;
 
-	if (!$dbc->Create($bookmarks))
-		$app->response->setStatus(400);
+	if (!$dbc->Delete($bookmark))
+		$app->response->setStatus(204);
 });
 
 /**
@@ -124,28 +123,33 @@ $app->post('/token', function () use ($app) {
 	$userObj->Username = $json['username'];
 	$userObj->Password = $json['password'];
 
-	$users = $dbc->Retrieve(array($userObj));
+	$users = $dbc->Retrieve($userObj);
 	if (empty($users)) {
-		echo json_encode($users);
-		echo json_encode($userObj);
 		$app->response->setStatus(404);
 		return;
 	}
 
 	$user = $users[0];
 	$token = new Token($user['user_id']);
-	if (!$dbc->Create(array($token))) {
+	if (!$dbc->Create($token)) {
 		$app->response->setStatus(500);
 		return;
 	}
 
 	echo json_encode(array(
-		'token_string' => $token->TokenString
+		'token_string' => $token->TokenString,
+		'user_id' => $token->UserId
 	));
 });
 
-$app->delete('/token', function () use ($app) {
+$app->delete('/token/:user_id', function ($user_id) use ($app) {
+	$json = json_decode($app->request->getBody(), true);
+	$dbc = $app->dataProvider;
 
+	$tokenObj = new Token($user_id);
+	$tokenObj->TokenString = $json['session_token'];
+
+	$dbc->Delete($tokenObj);
 });
 
 $app->run();
