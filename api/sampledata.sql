@@ -3,11 +3,11 @@ INSERT INTO user (
 	password,
 	email
 ) VALUES
-	('Tom', '123', 'Tom@example.com'),
-	('Bob', '123', 'Bob@example.com'),
-	('Jerry', '123', 'Jerry@example.com'),
-	('Laura', '123', 'Laura@example.com'),
-	('Violet', '123', 'Violet@example.com');
+	('Tom', '2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', 'Tom@example.com'),
+	('Bob', '2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', 'Bob@example.com'),
+	('Jerry', '2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', 'Jerry@example.com'),
+	('Laura', '2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', 'Laura@example.com'),
+	('Violet', '2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', 'Violet@example.com');
 
 INSERT INTO bookmark (
 	user_id,

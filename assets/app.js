@@ -1,5 +1,16 @@
 var app = angular.module('Main', ['ngRoute', 'ui.bootstrap', 'ngResource']);
 
+var preventDashbord = function($location, $q, authService) {
+	var deferred = $q.defer();
+	if (authService.isLoggedIn()) {
+		deferred.resolve(true);
+	} else {
+		$location.path("/");
+		deferred.reject();
+	}
+	return deferred;
+};
+
 app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
 		.when('/', {
@@ -18,7 +29,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 			templateUrl: 'assets/views/dashboard.html',
 			controller: 'DashboardController',
 			title: 'Dashboard',
-			id: 3
+			id: 3,
+			resolve: {
+				factory: preventDashbord
+			}
 		})
 		.when('/settings', {
 			templateUrl: 'assets/views/settings.html',

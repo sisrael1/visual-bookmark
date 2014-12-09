@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', '$route', '$resource', 'configService', 'authService', function ($scope, $route, $resource, configService, authService) {
+app.controller('MainController', ['$rootScope','$scope', '$route', '$resource', '$location', 'configService', 'authService', function ($rootScope, $scope, $route, $resource, $location, configService, authService) {
 	$scope.signUp = function (email, username, password) {
 		var credentials = {
 			email: email,
@@ -9,12 +9,20 @@ app.controller('MainController', ['$scope', '$route', '$resource', 'configServic
 		var User = $resource(configService.apiRoot + '/users');
 
 		User.save(credentials, function () {
-			console.log("Logging in");
 			authService.login(credentials);
+			$scope.signUpFailure = false;
+			$rootScope.$broadcast('SignUpSucceeded');
+		}, function () {
+			$scope.signUpFailure = true;
+			$rootScope.$broadcast('SignUpFailed');
 		});
 	};
 
 	$scope.$on('$routeChangeSuccess', function (event, current, previous) {
 		$scope.title = $route.current.title;
+	});
+
+	$scope.$on('LogoutSuccess', function (event, current, previous) {
+		$location.path("/");
 	});
 }]);
