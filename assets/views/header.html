@@ -20,10 +20,10 @@
 
 	<div class="container" ng-show="menuPopUpState == menuPopUpEnum.SIGN_IN">
 		<div id="login">
-			<form id="login-form">
-				<input id="login-submit" type="submit" value="Sign In" ng-click="signIn(signInForm.username, signInForm.password)" />
-				<input id="login-password" type="password" ng-model="signInForm.password" />
-				<input id="login-username" type="textbox" ng-model="signInForm.username" />
+			<form id="login-form" ng-submit="signIn(signInForm.username, signInForm.password)">
+				<input id="login-submit" type="submit" value="Sign In" />
+				<input id="login-password" type="password" required ng-class="{ badForm: signInFailure }" ng-model="signInForm.password" />
+				<input id="login-username" type="textbox" required ng-class="{ badForm: signInFailure }" ng-model="signInForm.username" />
 			</form>
 		</div>
 	</div>

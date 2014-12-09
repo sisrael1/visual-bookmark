@@ -52,7 +52,14 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 	});
 
 	$scope.$on('LoginSuccess', function () {
+		$scope.signInFailure = false;
 		$scope.signedIn = true;
+		$scope.menuPopUpState = $scope.menuPopUpEnum.BLANK;
+		$scope.setMenuLinks();
+	});
+
+	$scope.$on('LoginFailure', function () {
+		$scope.signInFailure = true;
 		$scope.setMenuLinks();
 	});
 
@@ -108,12 +115,6 @@ app.controller('HeaderController', ['$rootScope', '$scope', '$route', 'crudServi
 
 		switch ($scope.signedIn) {
 			case false:
-				$scope.menuLinks.push({
-					id: 2,
-					route: $route.routes['/dashboard'],
-					text: 'Tour',
-					click: function () {}
-				});
 				$scope.menuLinks.push({
 					id: 6,
 					url: '',

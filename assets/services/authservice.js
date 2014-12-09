@@ -39,6 +39,10 @@ app.factory('authService', ['$rootScope', '$resource', 'configService', function
 
 		getSession: function () {
 			return session;
+		},
+
+		isLoggedIn: function () {
+			return session.token_string != undefined;
 		}
 	};
 }]);

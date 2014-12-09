@@ -48,7 +48,7 @@ $app->post('/users', function() use ($app) {
 
 	$user = new User();
 	$user->Username = $json['username'];
-	$user->Password = $json['password'];
+	$user->Password = hash('sha256', $json['password']);
 	$user->Email = $json['email'];
 
 	if (!$dbc->Create($user)) {
@@ -121,7 +121,7 @@ $app->post('/token', function () use ($app) {
 
 	$userObj = new User();
 	$userObj->Username = $json['username'];
-	$userObj->Password = $json['password'];
+	$userObj->Password = hash('sha256', $json['password']);
 
 	$users = $dbc->Retrieve($userObj);
 	if (empty($users)) {
@@ -142,6 +142,10 @@ $app->post('/token', function () use ($app) {
 	));
 });
 
+/**
+ * Takes a userid and session token.
+ * Deletes the token from the database.
+ */
 $app->delete('/token/:user_id', function ($user_id) use ($app) {
 	$json = json_decode($app->request->getBody(), true);
 	$dbc = $app->dataProvider;
